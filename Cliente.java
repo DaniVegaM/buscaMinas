@@ -21,8 +21,8 @@ public class Cliente{
             ventana.setVisible(true);
 
             // Flujos para enviar y recibir datos
-            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+            ObjectOutputStream escribir = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream leer = new ObjectInputStream(socket.getInputStream());
 
             //LOGICA
 
