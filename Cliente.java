@@ -74,6 +74,8 @@ public class Cliente{
                 matriz = (MensajeServidor) leer.readObject();
                 System.out.println("Matriz de juguete actualizada: ");
                 printMatriz(matriz.getMatriz());
+
+                repintar(matriz.getMatriz());
             }
 
             //Terminó el juego
@@ -112,6 +114,11 @@ public class Cliente{
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void repintar(String[][] nuevaMatriz) {
+        ventana.matriz = nuevaMatriz;
+        ventana.repaint();
     }
 
     //Para pruebas en consola

@@ -196,7 +196,7 @@ public class Servidor{
             if(celda[2].equals("D")){
                 matrizJuguete[celdaa[0]][celdaa[1]] = "B";
                 mensajeServidor.setResultado(0); //Perdió
-            } else if(celda[2].equals("F")){
+            } else if(celda[2].equals("F") && matriz[celdaa[0]][celdaa[1]].equals("0")){
                 matrizJuguete[celdaa[0]][celdaa[1]] = "F";
             }
         } else if(matriz[celdaa[0]][celdaa[1]].equals("0")){
