@@ -196,7 +196,7 @@ public class Servidor{
             if(celda[2].equals("D")){
                 matrizJuguete[celdaa[0]][celdaa[1]] = "B";
                 mensajeServidor.setResultado(0); //Perdió
-            } else if(celda[2].equals("F") && (matriz[celdaa[0]][celdaa[1]].equals("0") || matriz[celdaa[0]][celdaa[1]].equals("X"))){
+            } else if(celda[2].equals("F")){
                 matrizJuguete[celdaa[0]][celdaa[1]] = "F";
             }
         } else if(matriz[celdaa[0]][celdaa[1]].equals("0")){
@@ -209,8 +209,6 @@ public class Servidor{
         } else{ //Si es un numero diferente a cero solo descubrimos esa
             if(celda[2].equals("D")){
                 matrizJuguete[celdaa[0]][celdaa[1]] = matriz[celdaa[0]][celdaa[1]];
-            } else if(celda[2].equals("F")){
-                matrizJuguete[celdaa[0]][celdaa[1]] = "F";
             }
         }
 
