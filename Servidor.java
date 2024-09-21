@@ -84,8 +84,6 @@ public class Servidor{
                 System.out.println(scoreJugador);
                 System.out.println(tiempoJugador);
                 System.out.println(scoreTotal);
-
-                Cliente.ventana.dibujarScore(scoreJugador, tiempoJugador, scoreTotal);
             }
 
         } catch (IOException e) {

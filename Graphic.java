@@ -155,25 +155,7 @@ public class Graphic extends JFrame implements ActionListener {
                 }
             }
         }
-    }
-
-    public void dibujarScore(String texto1, String texto2, String texto3) {
-        // Posición y separación de los textos
-        int yOffset = 270; // Ajusta esta posición según tus botones
-        int x = 38; // Posición horizontal (la misma que los botones)
-
-        // Establecer la fuente y el color
-        Graphics g = getGraphics(); // Obtiene el objeto Graphics
-        g.setFont(new Font("Arial", Font.PLAIN, 16));
-        g.setColor(Color.BLACK);
-
-        // Dibujar los textos
-        g.drawString(texto1, x, yOffset);
-        g.drawString(texto2, x, yOffset + 30);
-        g.drawString(texto3, x, yOffset + 60);
-    }
-    
-    
+    } 
 
     // Método para leer botones
     @Override
