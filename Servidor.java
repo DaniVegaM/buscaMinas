@@ -50,6 +50,9 @@ public class Servidor{
                 escribir.writeObject(mensajeServidor);
                 escribir.flush();
 
+                //Medimos tiempo al empezar a jugar
+                long tiempoInicio = System.currentTimeMillis();
+
                 //Analizamos datos hasta que acabe el juego
                 while(true){
                     // System.out.println("SERVIDOR AGUARDANDO CLICK");
@@ -74,12 +77,22 @@ public class Servidor{
                 }
 
                 //Terminó el juego
+                long tiempoFin = System.currentTimeMillis();
+                long tiempoTotal = (tiempoFin - tiempoInicio) / 1000; // Tiempo total en segundos
+
+                mensajeServidor.setTiempoJugador((int)tiempoTotal);
+
+                //Terminó el juego
                 System.out.println("Juego terminado en servidor");
 
                 //Mostramos score y tiempo
                 String scoreJugador = "Tu score final es de: " + numBanderasAcertadas * 100;
-                String tiempoJugador = "Terminaste en un tiempo de: 10 seg";
+                String tiempoJugador = "Terminaste en un tiempo de: " + tiempoTotal + " segundos";
                 String scoreTotal = "Score total: " + numBombas * 100;
+
+                //Envio resultados
+                escribir.reset();
+                escribir.writeObject(mensajeServidor);
 
                 System.out.println(scoreJugador);
                 System.out.println(tiempoJugador);
@@ -205,7 +218,8 @@ public class Servidor{
         if(matriz[celdaa[0]][celdaa[1]].equals("X")){
             if(celda[2].equals("D")){
                 matrizJuguete[celdaa[0]][celdaa[1]] = "B";
-                mensajeServidor.setScore(numBanderasAcertadas); //Perdió
+                mensajeServidor.setScoreJugador(numBanderasAcertadas); //Perdió
+                mensajeServidor.setScoreTotal(numBombas);
                 mensajeServidor.setEndGame(1);
             } else if(celda[2].equals("F")){
                 matrizJuguete[celdaa[0]][celdaa[1]] = "F";

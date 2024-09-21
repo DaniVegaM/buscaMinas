@@ -27,6 +27,12 @@ public class Graphic extends JFrame implements ActionListener {
     // Matriz para almacenar los valores de las celdas
     public String[][] matriz;
 
+    //Textos para resultados del juego
+    public String scoreJugador = "";
+    public String tiempoJugador = "";
+    public String scoreTotal = "";
+    public String tiempoRecord = "";
+
      // Imágenes para las celdas
      private Image bombImage;
      private Image flagImage;
@@ -59,6 +65,8 @@ public class Graphic extends JFrame implements ActionListener {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 dibujarCampo(g);
+
+                dibujarResultados(g);
             }
         };
 
@@ -112,6 +120,17 @@ public class Graphic extends JFrame implements ActionListener {
                 }
             }
         });
+    }
+
+    public void dibujarResultados(Graphics g) {
+        g.setColor(Color.BLUE);
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+
+        // Dibuja los textos de resultados
+        g.drawString(scoreJugador, 40, 400);
+        g.drawString(tiempoJugador, 40, 450);
+        g.drawString(scoreTotal, 40, 500);
+        g.drawString(tiempoRecord, 40, 550);
     }
 
     public void dibujarCampo(Graphics g) {

@@ -84,7 +84,10 @@ public class Cliente{
             escribir.writeObject(mensaje);
             System.out.println("Juego terminado en cliente");
 
-            
+            matriz = (MensajeServidor) leer.readObject();
+
+            System.out.println("Ya se leyo ahora mostramos resultados");
+            mostrarResultados(matriz.getScoreJugador(), matriz.getScoreTotal(), matriz.getTiempoJugador(), matriz.getTiempoTotal());
 
 
         } catch (IOException e) {
@@ -132,6 +135,22 @@ public class Cliente{
 
     public static void repintar(String[][] nuevaMatriz) {
         ventana.matriz = nuevaMatriz;
+        ventana.repaint();
+    }
+
+    public static void mostrarResultados(int scoreJugador, int scoreTotal, int tiempoJugador, int tiempoTotal) {
+        if(scoreJugador > scoreTotal){
+            ventana.scoreJugador = "New record! Score: " + String.valueOf(scoreJugador) + " points";
+        } else{
+            ventana.scoreJugador = "Score reached: " + String.valueOf(scoreJugador)  + " points";
+        }
+        ventana.scoreTotal = "Score Record: " + String.valueOf(scoreTotal) + " points";
+        if(tiempoJugador > tiempoTotal){
+            ventana.tiempoJugador = "New record! Time: " + String.valueOf(tiempoJugador) + " seconds";
+        } else{
+            ventana.tiempoJugador = "Game finished in: " + String.valueOf(tiempoJugador)  + " seconds";
+        }
+        ventana.tiempoRecord = "Time Record: " + String.valueOf(tiempoTotal)  + " seconds";
         ventana.repaint();
     }
 
