@@ -1,12 +1,15 @@
 
+import java.io.Serializable;
+
+
 /*
     Este será la clase del objeto que el servidor enviará al cliente
  */
-public class Matriz {
+public class MensajeServidor implements Serializable{
     private String[][] matriz;
-    private int resultado; // 1= GANADOR, 0= PERDEDOR
+    private int resultado = 2; // 1= GANADOR, 0= PERDEDOR, 2=JUGANDO
 
-    public Matriz(String[][] matriz){
+    public MensajeServidor(String[][] matriz){
         this.matriz = matriz;
     }
 
