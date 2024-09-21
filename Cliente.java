@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.util.Arrays;
 
 public class Cliente{
-    static Graphic ventana = new Graphic();
+    public static Graphic ventana = new Graphic();
     public static int dificultad = 0;
 
     public static String[] celdaSelected = {"0", "0", "X"}; //{fila,columna,modo}
@@ -57,7 +57,7 @@ public class Cliente{
             printMatriz(matriz.getMatriz());
 
             //Seguimos jugando
-            while(matriz.getResultado() == 2){
+            while(matriz.getEndGame() == 0 && faltaDescubrir(matriz.getMatriz())){
                 //Selecciono una celda
                 // System.out.println("CLIENTE ESPERANDO CELDA");
                 esperarClickCelda();
@@ -84,6 +84,9 @@ public class Cliente{
             escribir.writeObject(mensaje);
             System.out.println("Juego terminado en cliente");
 
+            
+
+
         } catch (IOException e) {
             System.out.println("Error: " + e);
         }
@@ -100,6 +103,17 @@ public class Cliente{
 
         System.out.println("Ahora celdaSelected vale:");
         System.out.println(Arrays.toString(celdaSelected));
+    }
+
+    public static boolean faltaDescubrir(String[][] matriz){
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[i].length; j++) {
+                if(matriz[i][j].equals("?")){ //Si falta descubrir retorna true
+                    return true;
+                }
+            }
+        }
+        return false; //Si no encontro ningun ? retorna false
     }
 
     public static void esperarClickCelda(){

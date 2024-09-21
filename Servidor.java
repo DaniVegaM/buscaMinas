@@ -13,6 +13,8 @@ public class Servidor{
     private static String[][] matrizJuguete;
     private static String[][] matriz;
     private static MensajeServidor mensajeServidor;
+
+    private static int numBanderasAcertadas = 0;
     public static void main(String[] args) throws ClassNotFoundException {
 
         try {
@@ -74,6 +76,16 @@ public class Servidor{
                 //Terminó el juego
                 System.out.println("Juego terminado en servidor");
 
+                //Mostramos score y tiempo
+                String scoreJugador = "Tu score final es de: " + numBanderasAcertadas * 100;
+                String tiempoJugador = "Terminaste en un tiempo de: 10 seg";
+                String scoreTotal = "Score total: " + numBombas * 100;
+
+                System.out.println(scoreJugador);
+                System.out.println(tiempoJugador);
+                System.out.println(scoreTotal);
+
+                Cliente.ventana.dibujarScore(scoreJugador, tiempoJugador, scoreTotal);
             }
 
         } catch (IOException e) {
@@ -195,9 +207,11 @@ public class Servidor{
         if(matriz[celdaa[0]][celdaa[1]].equals("X")){
             if(celda[2].equals("D")){
                 matrizJuguete[celdaa[0]][celdaa[1]] = "B";
-                mensajeServidor.setResultado(0); //Perdió
+                mensajeServidor.setScore(numBanderasAcertadas); //Perdió
+                mensajeServidor.setEndGame(1);
             } else if(celda[2].equals("F")){
                 matrizJuguete[celdaa[0]][celdaa[1]] = "F";
+                numBanderasAcertadas++;
             }
         } else if(matriz[celdaa[0]][celdaa[1]].equals("0")){
             //Se descubren las celdas adyacentes
@@ -209,6 +223,10 @@ public class Servidor{
         } else{ //Si es un numero diferente a cero solo descubrimos esa
             if(celda[2].equals("D")){
                 matrizJuguete[celdaa[0]][celdaa[1]] = matriz[celdaa[0]][celdaa[1]];
+            } else{ //Si es bandera
+                if(matrizJuguete[celdaa[0]][celdaa[1]].equals("?")){
+                    matrizJuguete[celdaa[0]][celdaa[1]] = "F";
+                }
             }
         }
 

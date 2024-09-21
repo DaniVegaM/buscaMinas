@@ -8,7 +8,8 @@ import java.io.Serializable;
 public class MensajeServidor implements Serializable{
     private static final long serialVersionUID = 2L;
     private String[][] matriz;
-    private int resultado = 2; // 1= GANADOR, 0= PERDEDOR, 2=JUGANDO
+    private int score = 999;
+    private int endGame = 0;
 
     public MensajeServidor(String[][] matriz){
         this.matriz = matriz;
@@ -23,11 +24,19 @@ public class MensajeServidor implements Serializable{
         this.matriz = matriz;
     }
 
-    public int getResultado() {
-        return resultado;
+    public int getScore() {
+        return score;
     }
 
-    public void setResultado(int resultado) {
-        this.resultado = resultado;
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setEndGame(int endGame){
+        this.endGame = endGame;
+    }
+
+    public int getEndGame(){
+        return endGame;
     }
 }
