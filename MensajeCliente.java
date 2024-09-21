@@ -6,6 +6,7 @@ import java.io.Serializable;
     Este será la clase del objeto que el cliente enviará al servidor
 */
 public class MensajeCliente implements Serializable{
+    private static final long serialVersionUID = 1L;
     private int dificultad;
     private String[] celdaSelected = new String[3];
     private int endGame = 0;

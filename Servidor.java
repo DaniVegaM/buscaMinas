@@ -44,6 +44,7 @@ public class Servidor{
                 printMatriz(matriz);
 
                 mensajeServidor = new MensajeServidor(matrizJuguete);
+                escribir.reset();
                 escribir.writeObject(mensajeServidor);
                 escribir.flush();
 
@@ -57,7 +58,11 @@ public class Servidor{
                     
                     actualizarMatrizJuguete(mensaje.getCeldaSelected());
 
-                    mensajeServidor = new MensajeServidor(matrizJuguete);
+                    System.out.println("Ya actualize, regreso esta matriz actualizada");
+                    printMatriz(matrizJuguete);
+
+                    mensajeServidor.setMatriz(matrizJuguete);
+                    escribir.reset();
                     escribir.writeObject(mensajeServidor);
                     escribir.flush();
                 }
@@ -202,33 +207,32 @@ public class Servidor{
     }
 
     public static void descubrirOtrasCeldas(int fila, int columna){
-        if(!estaDentroDeLimitesYNOHayBomba(matriz, fila, columna)){
-            return;
-        }
+        if (!estaDentroDeLimitesYNOHayBomba(matriz, fila, columna) || !matrizJuguete[fila][columna].equals("?")) {
+        return;
+    }
 
-        //Descubrimos la celda actual
-        matrizJuguete[fila][columna] = matriz[fila][columna];
+    // Descubrimos la celda actual
+    matrizJuguete[fila][columna] = matriz[fila][columna];
 
-        //Si la celda es "0", descubrimos las celdas adyacentes
-        if (matriz[fila][columna].equals("0")) {
-            // Recorremos todas las celdas adyacentes (incluyendo diagonales)
-            for (int i = -1; i <= 1; i++) {
-                for (int j = -1; j <= 1; j++) {
-                    // Saltamos la celda actual (i == 0 && j == 0)
-                    if (i == 0 && j == 0) {
-                        continue;
-                    }
-    
-                    int nuevaFila = fila + i;
-                    int nuevaColumna = columna + j;
-    
-                    // Llamada recursiva para descubrir la celda adyacente
-                    if (nuevaFila >= 0 && nuevaFila < matriz.length && nuevaColumna >= 0 && nuevaColumna < matriz[0].length) {
-                        descubrirOtrasCeldas(nuevaFila, nuevaColumna);
-                    }
+    // Si la celda es "0", descubrimos las celdas adyacentes
+    if (matriz[fila][columna].equals("0")) {
+        // Recorremos todas las celdas adyacentes (incluyendo diagonales)
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                // Saltamos la celda actual (i == 0 && j == 0)
+                if (i == 0 && j == 0) {
+                    continue;
                 }
+
+                int nuevaFila = fila + i;
+                int nuevaColumna = columna + j;
+
+                // Llamada recursiva para descubrir la celda adyacente
+                descubrirOtrasCeldas(nuevaFila, nuevaColumna);
             }
         }
+    }
+
     }
 
     //Utilities

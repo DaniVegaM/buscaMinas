@@ -6,6 +6,7 @@ import java.io.Serializable;
     Este será la clase del objeto que el servidor enviará al cliente
  */
 public class MensajeServidor implements Serializable{
+    private static final long serialVersionUID = 2L;
     private String[][] matriz;
     private int resultado = 2; // 1= GANADOR, 0= PERDEDOR, 2=JUGANDO
 

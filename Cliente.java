@@ -44,6 +44,7 @@ public class Cliente{
             
             //Ahora mando el mensaje inicial
             MensajeCliente mensaje = new MensajeCliente(dificultad);
+            escribir.reset();
             escribir.writeObject(mensaje);
             escribir.flush();
             System.out.println("Cliente: Ya inicié el juego");
@@ -61,6 +62,7 @@ public class Cliente{
                 // System.out.println("CLIENTE ESPERANDO CELDA");
                 esperarClickCelda();
                 mensaje.setCeldaSelected(celdaSelected);
+                escribir.reset();
                 escribir.writeObject(mensaje);
                 System.out.println("CLIENTE mensaje enviado: " + Arrays.toString(mensaje.getCeldaSelected()));
                 escribir.flush();
