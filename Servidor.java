@@ -49,10 +49,14 @@ public class Servidor{
                 escribir.flush();
 
                 //Analizamos datos hasta que acabe el juego
-                while(mensaje.getEndGame() == 0){
+                while(true){
                     // System.out.println("SERVIDOR AGUARDANDO CLICK");
                     System.out.println("mensaje antes de recibir: " + Arrays.toString(mensaje.getCeldaSelected()));
                     mensaje = (MensajeCliente) leer.readObject();
+
+                    if(mensaje.getEndGame() == 1){
+                        break;
+                    }
 
                     System.out.println("SERVIDOR: mensaje recibido: " + Arrays.toString(mensaje.getCeldaSelected()));
                     
@@ -187,14 +191,27 @@ public class Servidor{
         }
 
         //Comprobemos si hay bomba
+        //NOTA: B = Bomba F= FLAG 
         if(matriz[celdaa[0]][celdaa[1]].equals("X")){
-            mensajeServidor.setResultado(0); //Perdió
-            matrizJuguete[celdaa[0]][celdaa[1]] = "B";
+            if(celda[2].equals("D")){
+                matrizJuguete[celdaa[0]][celdaa[1]] = "B";
+                mensajeServidor.setResultado(0); //Perdió
+            } else if(celda[2].equals("F")){
+                matrizJuguete[celdaa[0]][celdaa[1]] = "F";
+            }
         } else if(matriz[celdaa[0]][celdaa[1]].equals("0")){
             //Se descubren las celdas adyacentes
-            descubrirOtrasCeldas(celdaa[0], celdaa[1]);
+            if(celda[2].equals("D")){
+                descubrirOtrasCeldas(celdaa[0], celdaa[1]);
+            } else if(celda[2].equals("F")){
+                matrizJuguete[celdaa[0]][celdaa[1]] = "F";
+            }
         } else{ //Si es un numero diferente a cero solo descubrimos esa
-            matrizJuguete[celdaa[0]][celdaa[1]] = matriz[celdaa[0]][celdaa[1]];
+            if(celda[2].equals("D")){
+                matrizJuguete[celdaa[0]][celdaa[1]] = matriz[celdaa[0]][celdaa[1]];
+            } else if(celda[2].equals("F")){
+                matrizJuguete[celdaa[0]][celdaa[1]] = "F";
+            }
         }
 
     }

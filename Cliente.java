@@ -11,7 +11,7 @@ public class Cliente{
 
     public static String[] celdaSelected = {"0", "0", "X"}; //{fila,columna,modo}
     public static String[] celdaSelectedTEMP = {"0", "0", "X"};
-    //NOTA: Aquí el modo puede ser FLAG (D) o DISCOVER (D), eso se determina si es click derecho o izquierdo
+    //NOTA: Aquí el modo puede ser FLAG (F) o DISCOVER (D), eso se determina si es click derecho o izquierdo
 
 
     public static void main(String[] args) throws ClassNotFoundException {
@@ -77,6 +77,9 @@ public class Cliente{
             }
 
             //Terminó el juego
+            escribir.reset();
+            mensaje.setEndGame(1);
+            escribir.writeObject(mensaje);
             System.out.println("Juego terminado en cliente");
 
         } catch (IOException e) {
