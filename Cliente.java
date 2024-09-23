@@ -1,4 +1,6 @@
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -85,9 +87,9 @@ public class Cliente{
             System.out.println("Juego terminado en cliente");
 
             matriz = (MensajeServidor) leer.readObject();
-
+            boolean haGanado = !faltaDescubrir(matriz.getMatriz()); // Si no hay celdas por descubrir, el jugador ha ganado
             System.out.println("Ya se leyo ahora mostramos resultados");
-            mostrarResultados(matriz.getScoreJugador(), matriz.getScoreTotal(), matriz.getTiempoJugador(), matriz.getTiempoTotal());
+            mostrarResultados(matriz.getScoreJugador(), matriz.getScoreTotal(), matriz.getTiempoJugador(), matriz.getTiempoTotal(), haGanado);
 
 
         } catch (IOException e) {
@@ -118,6 +120,7 @@ public class Cliente{
         }
         return false; //Si no encontro ningun ? retorna false
     }
+    
 
     public static void esperarClickCelda(){
         while (true) {
@@ -137,22 +140,40 @@ public class Cliente{
         ventana.matriz = nuevaMatriz;
         ventana.repaint();
     }
-
-    public static void mostrarResultados(int scoreJugador, int scoreTotal, int tiempoJugador, int tiempoTotal) {
-        if(scoreJugador > scoreTotal){
+   
+    public static void guardarResultados(int tiempoJugador, int scoreJugador) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("./resultados.txt", true))) {
+            writer.write(" Tiempo: " + tiempoJugador + " segundos, Puntaje: " + scoreJugador + " puntos");
+            writer.newLine();
+        } catch (IOException e) {
+            System.out.println("Ocurrio un error al guardar los resultados: " + e.getMessage());
+        }
+    }
+    
+    
+    public static void mostrarResultados(int scoreJugador, int scoreTotal, int tiempoJugador, int tiempoTotal, boolean haGanado) {
+        if (haGanado) {
+            // Guardar resultados solo si el jugador ganó
+            guardarResultados(tiempoJugador, scoreJugador);
+        }
+    
+        if (scoreJugador > scoreTotal) {
             ventana.scoreJugador = "New record! Score: " + String.valueOf(scoreJugador) + " points";
-        } else{
-            ventana.scoreJugador = "Score reached: " + String.valueOf(scoreJugador)  + " points";
+        } else {
+            ventana.scoreJugador = "Score reached: " + String.valueOf(scoreJugador) + " points";
         }
         ventana.scoreTotal = "Score Record: " + String.valueOf(scoreTotal) + " points";
-        if(tiempoJugador > tiempoTotal){
+        if (tiempoJugador < tiempoTotal && haGanado) {
             ventana.tiempoJugador = "New record! Time: " + String.valueOf(tiempoJugador) + " seconds";
-        } else{
-            ventana.tiempoJugador = "Game finished in: " + String.valueOf(tiempoJugador)  + " seconds";
+        } else {
+            ventana.tiempoJugador = "Game finished in: " + String.valueOf(tiempoJugador) + " seconds";
         }
-        ventana.tiempoRecord = "Time Record: " + String.valueOf(tiempoTotal)  + " seconds";
+        ventana.tiempoRecord = "Time Record: " + String.valueOf(tiempoTotal) + " seconds";
+    
         ventana.repaint();
     }
+    
+
 
     //Para pruebas en consola
     public static void printMatriz(String[][] matriz){

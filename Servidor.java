@@ -1,4 +1,8 @@
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -15,6 +19,7 @@ public class Servidor{
     private static MensajeServidor mensajeServidor;
 
     private static int numBanderasAcertadas = 0;
+    private static long mejorTiempo = Long.MAX_VALUE; // Variable para almacenar el mejor tiempo
     public static void main(String[] args) throws ClassNotFoundException {
 
         try {
@@ -85,6 +90,18 @@ public class Servidor{
                 //Terminó el juego
                 System.out.println("Juego terminado en servidor");
 
+                if (mensajeServidor.getEndGame() == 1 && numBanderasAcertadas > 0) { // Asegúrate de que el jugador ganó
+                    // Compara el tiempo del jugador con el mejor tiempo
+                    if (tiempoTotal < mejorTiempo) {
+                        mejorTiempo = tiempoTotal; // Actualiza el mejor tiempo
+                        guardarMejorTiempo(mejorTiempo); // Guarda el nuevo mejor tiempo
+                    }
+                }
+                // Leer el tiempo mínimo del archivo
+                int tiempoMinimo = obtenerTiempoMinimo("./resultados.txt");
+                mensajeServidor.setTiempoTotal(tiempoMinimo);
+
+
                 //Mostramos score y tiempo
                 String scoreJugador = "Tu score final es de: " + numBanderasAcertadas * 100;
                 String tiempoJugador = "Terminaste en un tiempo de: " + tiempoTotal + " segundos";
@@ -103,7 +120,36 @@ public class Servidor{
             System.out.println("Error: " + e);
         }
     }
-
+    private static int obtenerTiempoMinimo(String rutaArchivo) {
+        int tiempoMinimo = Integer.MAX_VALUE; // Inicializar con el valor máximo posible
+    
+        try (BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] partes = linea.split(" ");
+                // Verificamos que haya al menos 2 partes en la línea
+                for (int i = 0; i < partes.length; i++) {
+                    if (partes[i].startsWith("Tiempo:") && i + 1 < partes.length) {
+                        int tiempo = Integer.parseInt(partes[i + 1].trim());
+                        if (tiempo < tiempoMinimo) {
+                            tiempoMinimo = tiempo;
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    
+        return tiempoMinimo == Integer.MAX_VALUE ? 999 : tiempoMinimo; // Retorna 999 si no se encontró tiempo
+    }
+    private static void guardarMejorTiempo(long tiempo) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("./mejorTiempo.txt"))) {
+            writer.write("Mejor tiempo: " + tiempo + " segundos");
+        } catch (IOException e) {
+            System.out.println("Error al guardar el mejor tiempo: " + e.getMessage());
+        }
+    }
     public static void reset(){
         //Cada vez que se conecte un cliente se reinician las variables
         //La idea es que solo se conecte 1 cliente por eso se hace reset
