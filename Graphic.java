@@ -125,13 +125,27 @@ public class Graphic extends JFrame implements ActionListener {
     public void dibujarResultados(Graphics g) {
         g.setColor(Color.BLUE);
         g.setFont(new Font("Arial", Font.BOLD, 16));
-
-        // Dibuja los textos de resultados
+    
+        
         g.drawString(scoreJugador, 40, 400);
         g.drawString(tiempoJugador, 40, 450);
         g.drawString(scoreTotal, 40, 500);
         g.drawString(tiempoRecord, 40, 550);
+        
+        
+        g.setColor(Color.BLACK); 
+        g.setFont(new Font("Arial", Font.BOLD, 12)); // Estilo negrita y tamaño mayor
+        String nombre1 = "Jayim Javier Reyes Reyes";
+        String nombre2 = "Daniel Vega Miranda";
+        
+        int x1 = (getWidth() - g.getFontMetrics().stringWidth(nombre1)) / 2;
+        int x2 = (getWidth() - g.getFontMetrics().stringWidth(nombre2)) / 2;
+        g.drawString(nombre1, x1, 50); // Ajusta la altura según sea necesario
+        g.drawString(nombre2, x2, 80); // Ajusta la altura según sea necesario
     }
+    
+    
+    
 
     public void dibujarCampo(Graphics g) {
         for (int fila = 0; fila < filas; fila++) {

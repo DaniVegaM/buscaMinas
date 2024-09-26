@@ -87,7 +87,7 @@ public class Cliente{
             System.out.println("Juego terminado en cliente");
 
             matriz = (MensajeServidor) leer.readObject();
-            boolean haGanado = !faltaDescubrir(matriz.getMatriz()); // Si no hay celdas por descubrir, el jugador ha ganado
+            boolean haGanado = faltaDescubrir(matriz.getMatriz()); // Si no hay celdas por descubrir, el jugador ha ganado
             System.out.println("Ya se leyo ahora mostramos resultados");
             mostrarResultados(matriz.getScoreJugador(), matriz.getScoreTotal(), matriz.getTiempoJugador(), matriz.getTiempoTotal(), haGanado);
 
@@ -142,7 +142,10 @@ public class Cliente{
     }
    
     public static void guardarResultados(int tiempoJugador, int scoreJugador) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("./resultados.txt", true))) {
+        String rutaArchivo = "./resultados.txt"; // Ruta completa
+        System.out.println("Listo para guardaaaaaaaaaaaaaaaaaaaaaaar");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo, true))) {
+            System.out.println("Archivo abierto correctamente para escritura.");
             writer.write(" Tiempo: " + tiempoJugador + " segundos, Puntaje: " + scoreJugador + " puntos");
             writer.newLine();
         } catch (IOException e) {

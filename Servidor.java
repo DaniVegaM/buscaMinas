@@ -144,7 +144,7 @@ public class Servidor{
         return tiempoMinimo == Integer.MAX_VALUE ? 999 : tiempoMinimo; // Retorna 999 si no se encontró tiempo
     }
     private static void guardarMejorTiempo(long tiempo) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("./mejorTiempo.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("mejorTiempo.txt"))) {
             writer.write("Mejor tiempo: " + tiempo + " segundos");
         } catch (IOException e) {
             System.out.println("Error al guardar el mejor tiempo: " + e.getMessage());
