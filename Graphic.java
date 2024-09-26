@@ -10,6 +10,12 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -36,6 +42,7 @@ public class Graphic extends JFrame implements ActionListener {
      // Imágenes para las celdas
      private Image bombImage;
      private Image flagImage;
+     private JLabel gifLabel;
 
     //>>>FIN DE PARAMETROS PARA AJUSTAR<<<
 
@@ -46,6 +53,8 @@ public class Graphic extends JFrame implements ActionListener {
     public Graphic() { // Constructor
         // Carga las imágenes
         try {
+            // Reproduce música al iniciar la instancia
+            reproducirMusica("./musica.wav");
             bombImage = ImageIO.read(new File("img/bomb.png"));
             flagImage = ImageIO.read(new File("img/flag.png"));
         } catch (IOException e) {
@@ -89,6 +98,11 @@ public class Graphic extends JFrame implements ActionListener {
         button3.setBounds(38, 240, 140, 30);
         panel.add(button3);
 
+        // Cargar el GIF
+        gifLabel = new JLabel(new ImageIcon("./img/bomberman.gif")); // Cambia la ruta al GIF que desees
+        gifLabel.setBounds(30, 290, 160, 190); // Ajusta el tamaño y la posición según sea necesario
+        panel.add(gifLabel);
+
         // Agrega el panel a la ventana
         getContentPane().add(panel);
 
@@ -122,6 +136,20 @@ public class Graphic extends JFrame implements ActionListener {
         });
     }
 
+    private void reproducirMusica(String ruta) {
+        new Thread(() -> {
+            try {
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(ruta));
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioInputStream);
+                clip.loop(Clip.LOOP_CONTINUOUSLY); // Reproduce en bucle
+                clip.start();
+            } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
     public void dibujarResultados(Graphics g) {
         g.setColor(Color.BLUE);
         g.setFont(new Font("Arial", Font.BOLD, 16));
@@ -140,8 +168,8 @@ public class Graphic extends JFrame implements ActionListener {
         
         int x1 = (getWidth() - g.getFontMetrics().stringWidth(nombre1)) / 2;
         int x2 = (getWidth() - g.getFontMetrics().stringWidth(nombre2)) / 2;
-        g.drawString(nombre1, x1, 50); // Ajusta la altura según sea necesario
-        g.drawString(nombre2, x2, 80); // Ajusta la altura según sea necesario
+        g.drawString(nombre1, x1 - 20, 42); // Ajusta la altura según sea necesario
+        g.drawString(nombre2, x2 - 20, 58); // Ajusta la altura según sea necesario
     }
     
     
@@ -183,7 +211,7 @@ public class Graphic extends JFrame implements ActionListener {
                         // Dibuja el número en la celda
                         g.setColor(Color.BLACK);
                         g.setFont(new Font("Arial", Font.BOLD, 30));
-                        g.drawString(matriz[fila][columna], x + tamañoCelda / 4, y + (3 * tamañoCelda) / 4);
+                        g.drawString(matriz[fila][columna].equals("?") ? " " : matriz[fila][columna], x + tamañoCelda / 4, y + (3 * tamañoCelda) / 4);
                     }
                 }
             }

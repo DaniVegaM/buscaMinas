@@ -87,6 +87,7 @@ public class Cliente{
             System.out.println("Juego terminado en cliente");
 
             matriz = (MensajeServidor) leer.readObject();
+            repintar(matriz.getMatriz());
             boolean haGanado = faltaDescubrir(matriz.getMatriz()); // Si no hay celdas por descubrir, el jugador ha ganado
             System.out.println("Ya se leyo ahora mostramos resultados");
             mostrarResultados(matriz.getScoreJugador(), matriz.getScoreTotal(), matriz.getTiempoJugador(), matriz.getTiempoTotal(), haGanado);
@@ -175,8 +176,6 @@ public class Cliente{
     
         ventana.repaint();
     }
-    
-
 
     //Para pruebas en consola
     public static void printMatriz(String[][] matriz){

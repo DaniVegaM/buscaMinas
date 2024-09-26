@@ -108,6 +108,8 @@ public class Servidor{
                 String scoreTotal = "Score total: " + numBombas * 100;
 
                 //Envio resultados
+                String[][] lastMatrix = pintarBombasEnUltimaMatriz(matriz);
+                mensajeServidor.setMatriz(lastMatrix);
                 escribir.reset();
                 escribir.writeObject(mensajeServidor);
 
@@ -143,6 +145,7 @@ public class Servidor{
     
         return tiempoMinimo == Integer.MAX_VALUE ? 999 : tiempoMinimo; // Retorna 999 si no se encontró tiempo
     }
+    
     private static void guardarMejorTiempo(long tiempo) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("mejorTiempo.txt"))) {
             writer.write("Mejor tiempo: " + tiempo + " segundos");
@@ -150,6 +153,7 @@ public class Servidor{
             System.out.println("Error al guardar el mejor tiempo: " + e.getMessage());
         }
     }
+    
     public static void reset(){
         //Cada vez que se conecte un cliente se reinician las variables
         //La idea es que solo se conecte 1 cliente por eso se hace reset
@@ -293,6 +297,7 @@ public class Servidor{
     public static boolean estaDentroDeLimitesYHayBomba(String[][] matriz, int fila, int columna) {
         return fila >= 0 && fila < matriz.length && columna >= 0 && columna < matriz[0].length && matriz[fila][columna].equals("X");
     }
+    
     public static boolean estaDentroDeLimitesYNOHayBomba(String[][] matriz, int fila, int columna) {
         return fila >= 0 && fila < matriz.length && columna >= 0 && columna < matriz[0].length && !matriz[fila][columna].equals("X");
     }
@@ -339,5 +344,16 @@ public class Servidor{
             }
             System.out.println();
         }
+    }
+
+    public static String[][] pintarBombasEnUltimaMatriz(String[][] matriz){
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[i].length; j++) {
+                if(matriz[i][j].equals("X")){
+                    matrizJuguete[i][j] = "B";
+                }
+            }
+        }
+        return matrizJuguete;
     }
 }

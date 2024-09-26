@@ -1,1 +1,8 @@
  Tiempo: 0 segundos, Puntaje: 0 puntos
+ Tiempo: 1 segundos, Puntaje: 0 puntos
+ Tiempo: 6 segundos, Puntaje: 0 puntos
+ Tiempo: 0 segundos, Puntaje: 0 puntos
+ Tiempo: 1 segundos, Puntaje: 999 puntos
+ Tiempo: 5 segundos, Puntaje: 0 puntos
+ Tiempo: 9 segundos, Puntaje: 0 puntos
+ Tiempo: 13 segundos, Puntaje: 0 puntos
