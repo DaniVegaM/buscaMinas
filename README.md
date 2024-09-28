@@ -1,5 +1,5 @@
 ## ¿Cómo funciona?
-# Cliente Servidor
+Cliente Servidor
 <p>
   El servidor será el encargado de procesar y comparar las 2 matrices, tanto la "matriz de juguete" que es la matriz que tiene el cliente y muestra por medio de la interfaz gráfica al usuario
   y la matriz "real" que es la matriz con la ubicación real de las bombas y números adyacentes a ellas.
