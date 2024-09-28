@@ -6,3 +6,4 @@
  Tiempo: 5 segundos, Puntaje: 0 puntos
  Tiempo: 9 segundos, Puntaje: 0 puntos
  Tiempo: 13 segundos, Puntaje: 0 puntos
+ Tiempo: 15 segundos, Puntaje: 0 puntos

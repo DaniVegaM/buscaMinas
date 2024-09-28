@@ -100,15 +100,15 @@ public class Graphic extends JFrame implements ActionListener {
 
         // Cargar el GIF
         gifLabel = new JLabel(new ImageIcon("./img/bomberman.gif")); // Cambia la ruta al GIF que desees
-        gifLabel.setBounds(30, 290, 160, 190); // Ajusta el tamaño y la posición según sea necesario
+        gifLabel.setBounds(30, 500, 160, 190); // Ajusta el tamaño y la posición según sea necesario
         panel.add(gifLabel);
 
         // Agrega el panel a la ventana
         getContentPane().add(panel);
 
         // Etiquetas
-        JLabel titleLabel = new JLabel("BuscaMinas");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        JLabel titleLabel = new JLabel("mineSweeper");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
         titleLabel.setBounds(400, 0, 300, 30);
         panel.add(titleLabel);
 
@@ -163,13 +163,10 @@ public class Graphic extends JFrame implements ActionListener {
         
         g.setColor(Color.BLACK); 
         g.setFont(new Font("Arial", Font.BOLD, 12)); // Estilo negrita y tamaño mayor
-        String nombre1 = "Jayim Javier Reyes Reyes";
-        String nombre2 = "Daniel Vega Miranda";
+        String nombre1 = "DaniV";
         
         int x1 = (getWidth() - g.getFontMetrics().stringWidth(nombre1)) / 2;
-        int x2 = (getWidth() - g.getFontMetrics().stringWidth(nombre2)) / 2;
         g.drawString(nombre1, x1 - 20, 42); // Ajusta la altura según sea necesario
-        g.drawString(nombre2, x2 - 20, 58); // Ajusta la altura según sea necesario
     }
     
     
